@@ -1,11 +1,10 @@
 class ExpenseCategorizer:
     def __init__(self):
         self.code_words = {
-            "Monthly payments": ("monthly", "bills", "electricity", "internet", "rent"),
+            "Monthly payments": ("monthly", "bill", "electricity", "internet", "rent"),
             "Food": ("dinner", "breakfast", "lunch", "dinner", "market", "groceries", "cafe", "restaurant"),
             "Transportation": ("uber", "ride", "taxi", "bus", "metro", "gas", "fuel"),
             "Entertainment":    ("movie", "concert", "game", "streaming", "netflix"),
-            "Others": ()
         }
 
         self.categories_values = {
@@ -22,20 +21,18 @@ class ExpenseCategorizer:
         for expense in info_detail:
             name = expense[0].lower()
             amount = float(expense[1])
-            assigned = False
+            categorized = False
 
             for category,keywords in self.code_words.items():
-                if category == "Others":
-                    continue
                 if any(keyword in name for keyword in keywords):
                     self._update_category(category, name, amount)
-                    assigned = True
+                    categorized = True
                     break
-            
-            if not assigned:
+            if not categorized:
                 self._update_category("Others", name, amount)
         
         print(self.categories_values)
+        print("\n")
         print(self.categories)
                 
     
